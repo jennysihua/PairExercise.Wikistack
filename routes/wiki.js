@@ -1,13 +1,13 @@
 const express = require('express')
 // const models = require('../models');
 const router = express.Router()
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const { addPage } = require('../views')
 const { Page } = require("../models")
 // const mainView = require('../views/main.js')
 module.exports = router
 
-router.use(bodyParser.json())
+// router.use(bodyParser.json())
 
 router.get('/', (req, res, next) => {
   res.send('hi!')
@@ -15,11 +15,17 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   console.log(req.body)
-  // let postedPage = Page.create({ title: req.body.title,
-  //               content: req.body.content,
-  //               status: req.body.status,
-  //               createdAt: new Date(),
-  //               updatedAt: new Date()})
+  function generateSlug (title) {
+    return title.replace(/\s+/g, '_').replace(/\W/g, '');
+  }
+
+  let postedPage = Page.create({
+    title: req.body.title,
+    content: req.body.content,
+    slug: generateSlug(req.body.title),
+    status: req.body.status,
+    createdAt: new Date(),
+    updatedAt: new Date()})
 
 })
 

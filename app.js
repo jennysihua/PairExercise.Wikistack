@@ -6,10 +6,11 @@ const app = express();
 const wikiRouter = require('./routes/wiki.js')
 const userRouter = require('./routes/user.js')
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(morgan('dev'))
 app.use('/wiki', wikiRouter)
 app.use('/user', userRouter)
-app.use(bodyParser.json())
-app.use(morgan('dev'))
 
 const PORT = 3000;
 
